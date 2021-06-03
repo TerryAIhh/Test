@@ -1,6 +1,9 @@
 from time import sleep
+
+from PIL import Image
 from selenium import webdriver
 import random
+import pytesseract
 
 
 def login():
@@ -38,8 +41,11 @@ def login():
     sleep(random.uniform(0, 2))
     driver.find_element_by_xpath('//*[@id="tasktable"]/tbody/tr/td[4]/a').click()
     sleep(random.uniform(1, 3))
-    tabs = driver.find_element_by_xpath('//*[@id="mainContent"]/div[2]/div[1]/div')
+    tabs = driver.find_element_by_xpath('//*[@id="legendBasic"]/table/tbody/tr[4]/td')
     tabs.screenshot('tabs.png')
+    text = pytesseract.image_to_string(Image.open('tabs.png'))
+    print(text)
+
     # # 切入网页框架
     # sleep(random.unifrom(1, 3))
     # driver.switch_to.frame(driver.find_element_by_xpath(r'//*[@id="J_login_container"]/div/iframe'))
